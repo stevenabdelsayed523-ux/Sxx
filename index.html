@@ -3,52 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sxx Project</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-        .container {
-            background: white;
-            border-radius: 10px;
-            padding: 40px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #667eea;
-            margin: 0 0 20px 0;
-        }
-        p {
-            color: #666;
-        }
-        .link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .link:hover {
-            background: #764ba2;
-        }
-    </style>
+    <title>Sxx - Your AI Pair Programmer</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>🚀 Welcome to Sxx</h1>
-        <p>This is your GitHub Pages site powered by the Sxx repository.</p>
-        <p>You can customize this page by editing the <code>index.html</code> file in your repository.</p>
-        <a href="https://github.com/stevenabdelsayed523-ux/Sxx" class="link">View Repository</a>
-    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Sxx</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>CodeMate AI</h1>
+            <p>Your AI pair-programmer that never sleeps</p>
+            <button class="cta-button">Get Started</button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2>Powerful Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>Get instant code suggestions and completions powered by advanced AI models.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure & Private</h3>
+                <p>Your code stays private. We never store or share your data.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Smart Context</h3>
+                <p>AI understands your codebase and provides contextually relevant suggestions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Multi-Language</h3>
+                <p>Support for JavaScript, Python, TypeScript, Go, Rust, and many more.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔌</div>
+                <h3>Easy Integration</h3>
+                <p>Works seamlessly with your favorite code editors and IDEs.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Learn & Improve</h3>
+                <p>Get AI-powered explanations and learn better coding practices.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-content">
+            <h2>About Sxx</h2>
+            <p>Sxx is a next-generation AI coding assistant designed to accelerate development workflows. Built with cutting-edge machine learning technology, it understands code context and provides intelligent suggestions that help you write better code faster.</p>
+            <div class="stats">
+                <div class="stat">
+                    <h3>1000+</h3>
+                    <p>Active Users</p>
+                </div>
+                <div class="stat">
+                    <h3>50+</h3>
+                    <p>Supported Languages</p>
+                </div>
+                <div class="stat">
+                    <h3>24/7</h3>
+                    <p>Support Available</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2>Get in Touch</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sxx Project. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://github.com/stevenabdelsayed523-ux/Sxx" target="_blank">GitHub</a>
+            <a href="https://twitter.com" target="_blank">Twitter</a>
+            <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
