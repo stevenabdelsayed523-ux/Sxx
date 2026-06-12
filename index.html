@@ -3,29 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sxx - Your AI Pair Programmer</title>
+    <meta name="description" content="CodeMate AI - Your AI pair-programmer that never sleeps">
+    <title>CodeMate AI - Intelligent Code Assistant</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">Sxx</div>
+            <div class="logo">
+                <i class="fas fa-code"></i> CodeMate AI
+            </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#features">Features</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="https://github.com/stevenabdelsayed523-ux/Sxx" target="_blank" class="github-btn">
+                    <i class="fab fa-github"></i> GitHub
+                </a></li>
             </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1>CodeMate AI</h1>
-            <p>Your AI pair-programmer that never sleeps</p>
-            <button class="cta-button">Get Started</button>
+            <h1>Your AI Pair-Programmer That Never Sleeps</h1>
+            <p>CodeMate AI is an intelligent coding assistant that writes, debugs, and refactors code in real-time across any language or framework.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollTo('#demo')">Try It Now</button>
+                <button class="btn btn-secondary" onclick="scrollTo('#features')">Learn More</button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <h3>50+</h3>
+                    <p>Languages</p>
+                </div>
+                <div class="stat">
+                    <h3>1000+</h3>
+                    <p>Active Users</p>
+                </div>
+                <div class="stat">
+                    <h3>24/7</h3>
+                    <p>Available</p>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="code-window">
+                <div class="window-header">
+                    <span>main.ts</span>
+                </div>
+                <pre><code>function fibonacci(n: number): number {
+  if (n &lt;= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}</code></pre>
+            </div>
         </div>
     </section>
 
@@ -34,55 +75,160 @@
         <h2>Powerful Features</h2>
         <div class="features-grid">
             <div class="feature-card">
-                <div class="feature-icon">⚡</div>
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
                 <h3>Lightning Fast</h3>
-                <p>Get instant code suggestions and completions powered by advanced AI models.</p>
+                <p>Get instant code suggestions powered by advanced AI models. Real-time completions as you type.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🔒</div>
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
                 <h3>Secure & Private</h3>
-                <p>Your code stays private. We never store or share your data.</p>
+                <p>Your code stays private. Enterprise-grade security with zero data storage policies.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🎯</div>
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
                 <h3>Smart Context</h3>
-                <p>AI understands your codebase and provides contextually relevant suggestions.</p>
+                <p>AI understands your entire codebase and provides contextually relevant suggestions.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🚀</div>
+                <div class="feature-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
                 <h3>Multi-Language</h3>
-                <p>Support for JavaScript, Python, TypeScript, Go, Rust, and many more.</p>
+                <p>Support for JavaScript, Python, TypeScript, Go, Rust, Java, C++, and 40+ more languages.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🔌</div>
+                <div class="feature-icon">
+                    <i class="fas fa-puzzle-piece"></i>
+                </div>
                 <h3>Easy Integration</h3>
-                <p>Works seamlessly with your favorite code editors and IDEs.</p>
+                <p>Works seamlessly with VS Code, JetBrains IDEs, Sublime, and all major code editors.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">📚</div>
+                <div class="feature-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
                 <h3>Learn & Improve</h3>
-                <p>Get AI-powered explanations and learn better coding practices.</p>
+                <p>Get AI-powered explanations and learn better coding practices from real examples.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bug"></i>
+                </div>
+                <h3>Debug Assistant</h3>
+                <p>Identify bugs instantly and get intelligent suggestions for fixes and optimizations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-sync"></i>
+                </div>
+                <h3>Refactor Code</h3>
+                <p>Transform legacy code into modern, clean, and maintainable code automatically.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo">
+        <h2>Interactive Demo</h2>
+        <div class="demo-container">
+            <div class="demo-input">
+                <h3>Input Your Code</h3>
+                <textarea id="codeInput" placeholder="Paste your code here..." rows="12">function add(a, b) {
+  return a + b;
+}</textarea>
+                <button class="btn btn-primary" onclick="analyzeCode()">
+                    <i class="fas fa-magic"></i> Analyze with AI
+                </button>
+            </div>
+            <div class="demo-output">
+                <h3>AI Suggestions</h3>
+                <div id="demoOutput" class="output-box">
+                    <p class="placeholder">Your AI suggestions will appear here...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <h2>Simple Pricing</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <div class="price">Free</div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> 100 suggestions/day</li>
+                    <li><i class="fas fa-check"></i> Basic code completion</li>
+                    <li><i class="fas fa-check"></i> Community support</li>
+                </ul>
+                <button class="btn btn-secondary">Get Started</button>
+            </div>
+            <div class="pricing-card featured">
+                <div class="badge">Popular</div>
+                <h3>Pro</h3>
+                <div class="price">$9<span>/month</span></div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> Unlimited suggestions</li>
+                    <li><i class="fas fa-check"></i> Advanced refactoring</li>
+                    <li><i class="fas fa-check"></i> Priority support</li>
+                    <li><i class="fas fa-check"></i> Team collaboration</li>
+                </ul>
+                <button class="btn btn-primary">Start Free Trial</button>
+            </div>
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <div class="price">Custom</div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> Everything in Pro</li>
+                    <li><i class="fas fa-check"></i> Dedicated support</li>
+                    <li><i class="fas fa-check"></i> Custom integration</li>
+                    <li><i class="fas fa-check"></i> SLA guarantee</li>
+                </ul>
+                <button class="btn btn-secondary">Contact Sales</button>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="about">
+        <h2>About CodeMate AI</h2>
         <div class="about-content">
-            <h2>About Sxx</h2>
-            <p>Sxx is a next-generation AI coding assistant designed to accelerate development workflows. Built with cutting-edge machine learning technology, it understands code context and provides intelligent suggestions that help you write better code faster.</p>
-            <div class="stats">
-                <div class="stat">
-                    <h3>1000+</h3>
-                    <p>Active Users</p>
+            <div class="about-text">
+                <p>CodeMate AI was built by developers, for developers. We understand the challenges of modern software development and created an AI assistant that truly understands code.</p>
+                <p>Our mission is to make developers more productive, help them write better code, and allow them to focus on what matters most—solving complex problems and building amazing applications.</p>
+                <div class="tech-stack">
+                    <h4>Built With</h4>
+                    <div class="tech-items">
+                        <span>React 18</span>
+                        <span>TypeScript</span>
+                        <span>Node.js</span>
+                        <span>Express</span>
+                        <span>Vite</span>
+                    </div>
                 </div>
-                <div class="stat">
-                    <h3>50+</h3>
+            </div>
+            <div class="about-stats">
+                <div class="stat-card">
+                    <h4>50+</h4>
                     <p>Supported Languages</p>
                 </div>
-                <div class="stat">
-                    <h3>24/7</h3>
-                    <p>Support Available</p>
+                <div class="stat-card">
+                    <h4>10M+</h4>
+                    <p>Code Snippets Analyzed</p>
+                </div>
+                <div class="stat-card">
+                    <h4>1000+</h4>
+                    <p>Active Developers</p>
+                </div>
+                <div class="stat-card">
+                    <h4>99.9%</h4>
+                    <p>Uptime SLA</p>
                 </div>
             </div>
         </div>
@@ -90,22 +236,77 @@
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
-        <h2>Get in Touch</h2>
-        <form class="contact-form">
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea placeholder="Your Message" rows="5" required></textarea>
-            <button type="submit" class="submit-btn">Send Message</button>
+        <h2>Get In Touch</h2>
+        <form class="contact-form" onsubmit="handleFormSubmit(event)">
+            <div class="form-group">
+                <input type="text" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="Subject" required>
+            </div>
+            <div class="form-group">
+                <textarea placeholder="Your Message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <h2>Stay Updated</h2>
+        <p>Get the latest updates and features delivered to your inbox</p>
+        <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
         </form>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2026 Sxx Project. All rights reserved.</p>
-        <div class="social-links">
-            <a href="https://github.com/stevenabdelsayed523-ux/Sxx" target="_blank">GitHub</a>
-            <a href="https://twitter.com" target="_blank">Twitter</a>
-            <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>CodeMate AI</h4>
+                <p>Your AI pair-programmer that never sleeps.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Security</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <a href="https://github.com/stevenabdelsayed523-ux/Sxx" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CodeMate AI. All rights reserved. | Made with <i class="fas fa-heart"></i> by developers</p>
         </div>
     </footer>
 
