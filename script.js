@@ -1,55 +1,277 @@
-// Smooth scrolling helper
-function scrollTo(selector) {
-    const element = document.querySelector(selector);
-    if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+// Global variables
+let userInfo = null;
+let apiKey = localStorage.getItem('geminiApiKey');
+let userAuthenticated = false;
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    checkAuthStatus();
+    observeElements();
+    console.log('CodeMate AI Website loaded successfully!');
+});
+
+// Auth Modal Functions
+function showAuthModal() {
+    document.getElementById('authModal').style.display = 'block';
+}
+
+function closeAuthModal() {
+    document.getElementById('authModal').style.display = 'none';
+}
+
+function checkAuthStatus() {
+    const savedUser = localStorage.getItem('codemate_user');
+    if (savedUser) {
+        userInfo = JSON.parse(savedUser);
+        userAuthenticated = true;
+        showUserProfile();
+    } else {
+        userAuthenticated = false;
+        showLoginButton();
+    }
+    updateDemoSection();
+}
+
+function showUserProfile() {
+    document.getElementById('loginBtn').style.display = 'none';
+    document.getElementById('userProfile').style.display = 'flex';
+    document.getElementById('userName').textContent = userInfo.name || 'User';
+    if (userInfo.picture) {
+        document.getElementById('userAvatar').src = userInfo.picture;
     }
 }
 
-// Navigation scroll animations
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
+function showLoginButton() {
+    document.getElementById('loginBtn').style.display = 'block';
+    document.getElementById('userProfile').style.display = 'none';
+}
 
-// Demo - Analyze code functionality
-function analyzeCode() {
-    const codeInput = document.getElementById('codeInput').value;
-    const outputBox = document.getElementById('demoOutput');
+// Google Login
+function handleGoogleLogin() {
+    // For production, implement proper OAuth flow
+    const email = prompt('Enter your Google email:');
+    if (email) {
+        userInfo = {
+            email: email,
+            name: email.split('@')[0],
+            provider: 'google',
+            picture: `https://ui-avatars.com/api/?name=${email.split('@')[0]}&background=667eea&color=fff`
+        };
+        localStorage.setItem('codemate_user', JSON.stringify(userInfo));
+        userAuthenticated = true;
+        closeAuthModal();
+        showUserProfile();
+        updateDemoSection();
+        alert(`Welcome ${userInfo.name}! You can now use the AI analyzer.`);
+    }
+}
+
+// GitHub Login
+function handleGithubLogin() {
+    // For production, implement proper OAuth flow with GitHub
+    const username = prompt('Enter your GitHub username:');
+    if (username) {
+        userInfo = {
+            username: username,
+            name: username,
+            provider: 'github',
+            picture: `https://github.com/${username}.png?size=100`
+        };
+        localStorage.setItem('codemate_user', JSON.stringify(userInfo));
+        userAuthenticated = true;
+        closeAuthModal();
+        showUserProfile();
+        updateDemoSection();
+        alert(`Welcome ${username}! You can now use the AI analyzer.`);
+    }
+}
+
+// Set API Key
+function setApiKey() {
+    const key = document.getElementById('apiKeyInput').value.trim();
+    if (key) {
+        apiKey = key;
+        localStorage.setItem('geminiApiKey', key);
+        userInfo = {
+            name: 'API User',
+            provider: 'api_key',
+            picture: 'https://ui-avatars.com/api/?name=API+User&background=667eea&color=fff'
+        };
+        localStorage.setItem('codemate_user', JSON.stringify(userInfo));
+        userAuthenticated = true;
+        closeAuthModal();
+        showUserProfile();
+        updateDemoSection();
+        alert('✓ API Key set successfully! You can now use the real AI analyzer.');
+    } else {
+        alert('Please enter a valid API key');
+    }
+}
+
+function logout() {
+    localStorage.removeItem('codemate_user');
+    localStorage.removeItem('geminiApiKey');
+    userInfo = null;
+    apiKey = null;
+    userAuthenticated = false;
+    showLoginButton();
+    updateDemoSection();
+    alert('You have been logged out.');
+}
+
+function updateDemoSection() {
+    const authRequired = document.getElementById('authRequired');
+    const demoContainer = document.getElementById('demoContainer');
     
-    if (!codeInput.trim()) {
-        outputBox.innerHTML = '<p style="color: #e53e3e;">Please enter some code first.</p>';
+    if (userAuthenticated && apiKey) {
+        authRequired.style.display = 'none';
+        demoContainer.style.display = 'grid';
+    } else {
+        authRequired.style.display = 'block';
+        demoContainer.style.display = 'none';
+    }
+}
+
+// Real AI Analysis with Google Gemini
+async function analyzeCodeWithAI() {
+    if (!apiKey) {
+        alert('Please set your Gemini API Key first');
+        showAuthModal();
         return;
     }
 
-    // Simulate AI analysis
+    const code = document.getElementById('codeInput').value.trim();
+    const language = document.getElementById('languageSelect').value;
+    const task = document.getElementById('taskSelect').value;
+    const outputBox = document.getElementById('demoOutput');
+    const spinner = document.getElementById('loadingSpinner');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+
+    if (!code) {
+        outputBox.innerHTML = '<p style="color: #e53e3e;"><i class="fas fa-exclamation-circle"></i> Please enter some code first.</p>';
+        return;
+    }
+
+    spinner.style.display = 'block';
+    analyzeBtn.disabled = true;
+    outputBox.innerHTML = '';
+
+    try {
+        const prompt = buildAIPrompt(code, language, task);
+        
+        // Using fetch API to call Gemini API
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                contents: [
+                    {
+                        parts: [
+                            {
+                                text: prompt
+                            }
+                        ]
+                    }
+                ]
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`API Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const aiResponse = data.candidates[0].content.parts[0].text;
+        
+        displayAIAnalysis(aiResponse, task);
+    } catch (error) {
+        console.error('AI Analysis Error:', error);
+        outputBox.innerHTML = `<p style="color: #e53e3e;"><i class="fas fa-exclamation-circle"></i> Error: ${error.message}</p>
+                               <p style="color: #a0aec0; font-size: 0.9rem;">Make sure your Gemini API key is valid. Get one from: <a href="https://makersuite.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio</a></p>`;
+    } finally {
+        spinner.style.display = 'none';
+        analyzeBtn.disabled = false;
+    }
+}
+
+function buildAIPrompt(code, language, task) {
+    const prompts = {
+        analyze: `Analyze this ${language} code and provide:
+1. Code quality assessment
+2. Complexity analysis
+3. Best practices feedback
+4. Potential improvements
+
+Code:\n\`\`\`${language}\n${code}\n\`\`\``,
+        
+        debug: `Find bugs and issues in this ${language} code. List each issue with:
+1. Issue description
+2. Severity level (High/Medium/Low)
+3. Suggested fix
+
+Code:\n\`\`\`${language}\n${code}\n\`\`\``,
+        
+        refactor: `Suggest refactoring improvements for this ${language} code:
+1. Current structure issues
+2. Proposed improvements
+3. Refactored code example
+
+Code:\n\`\`\`${language}\n${code}\n\`\`\``,
+        
+        optimize: `Optimize this ${language} code for performance. Provide:
+1. Performance bottlenecks
+2. Time complexity analysis
+3. Optimized version
+4. Performance improvement estimates
+
+Code:\n\`\`\`${language}\n${code}\n\`\`\``,
+        
+        document: `Add comprehensive documentation to this ${language} code. Include:
+1. Function/class descriptions
+2. Parameter documentation
+3. Return value documentation
+4. Usage examples
+
+Code:\n\`\`\`${language}\n${code}\n\`\`\``,
+        
+        test: `Generate unit tests for this ${language} code. Create:
+1. Test cases covering main functionality
+2. Edge case tests
+3. Error handling tests
+4. Example test code
+
+Code:\n\`\`\`${language}\n${code}\n\`\`\``
+    };
+
+    return prompts[task] || prompts.analyze;
+}
+
+function displayAIAnalysis(response, task) {
+    const outputBox = document.getElementById('demoOutput');
+    const taskIcons = {
+        analyze: '🔍',
+        debug: '🐛',
+        refactor: '♻️',
+        optimize: '⚡',
+        document: '📝',
+        test: '✅'
+    };
+
+    const icon = taskIcons[task] || '✓';
     outputBox.innerHTML = `
         <div style="animation: fadeInUp 0.5s ease-out;">
-            <h4 style="color: #4299e1; margin-bottom: 1rem;">✓ AI Analysis Complete</h4>
-            <div style="text-align: left; font-size: 0.85rem;">
-                <p style="margin-bottom: 1rem;"><strong>Suggestions:</strong></p>
-                <ul style="margin-left: 1.5rem; color: #68d391;">
-                    <li>✓ Function complexity is low (good!)</li>
-                    <li>✓ Variable naming is clear</li>
-                    <li>✓ Consider adding JSDoc comments</li>
-                    <li>✓ Performance: O(1) time complexity</li>
-                    <li>✓ Consider adding input validation</li>
-                </ul>
-                <p style="margin-top: 1rem; color: #a0aec0;"><em>Confidence: 94%</em></p>
+            <h4 style="color: #4299e1; margin-bottom: 1rem;"><i class="fas fa-check-circle"></i> ${icon} AI Analysis Complete</h4>
+            <div style="text-align: left; font-size: 0.95rem; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; color: #68d391;">
+                ${response.split('\n').map(line => `<div>${line}</div>`).join('')}
             </div>
+            <p style="margin-top: 1rem; color: #a0aec0; font-size: 0.85rem;"><em>Powered by Google Gemini AI</em></p>
         </div>
     `;
 }
 
-// Form submission handling
+// Form Submissions
 function handleFormSubmit(event) {
     event.preventDefault();
     
@@ -63,17 +285,14 @@ function handleFormSubmit(event) {
     
     console.log('Form submitted:', formData);
     
-    // Show success message
     const submitBtn = form.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
     submitBtn.textContent = '✓ Message Sent Successfully!';
     submitBtn.style.background = '#48bb78';
     submitBtn.disabled = true;
     
-    // Reset form
     form.reset();
     
-    // Restore button after 3 seconds
     setTimeout(() => {
         submitBtn.textContent = originalText;
         submitBtn.style.background = '';
@@ -81,7 +300,6 @@ function handleFormSubmit(event) {
     }, 3000);
 }
 
-// Newsletter form submission
 function handleNewsletterSubmit(event) {
     event.preventDefault();
     
@@ -101,7 +319,14 @@ function handleNewsletterSubmit(event) {
     }, 2000);
 }
 
-// Add scroll animation for elements
+// Utility Functions
+function scrollTo(selector) {
+    const element = document.querySelector(selector);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
 function observeElements() {
     const observerOptions = {
         threshold: 0.1,
@@ -117,22 +342,19 @@ function observeElements() {
         });
     }, observerOptions);
 
-    // Observe all cards
     document.querySelectorAll('.feature-card, .pricing-card, .stat-card, .footer-section').forEach(el => {
         el.style.opacity = '0';
         observer.observe(el);
     });
 }
 
-// Mobile menu toggle (placeholder for future expansion)
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-
-if (hamburger) {
-    hamburger.addEventListener('click', () => {
-        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-    });
-}
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('authModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+};
 
 // Navbar shadow on scroll
 window.addEventListener('scroll', () => {
@@ -144,15 +366,8 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Initialize animations when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    observeElements();
-    console.log('CodeMate AI Website loaded successfully!');
-});
-
-// Keyboard navigation for accessibility
+// Keyboard shortcuts
 document.addEventListener('keydown', (e) => {
-    // Press '?' to show keyboard shortcuts
     if (e.key === '?') {
         console.log(`
         🎹 Keyboard Shortcuts:
@@ -164,34 +379,4 @@ document.addEventListener('keydown', (e) => {
         c - Jump to Contact
         `);
     }
-    
-    // Quick navigation shortcuts
-    if (e.ctrlKey || e.metaKey) {
-        switch(e.key) {
-            case '#':
-                scrollTo('#home');
-                break;
-            case 'f':
-                scrollTo('#features');
-                break;
-            case 'd':
-                scrollTo('#demo');
-                break;
-            case 'p':
-                scrollTo('#pricing');
-                break;
-            case 'c':
-                scrollTo('#contact');
-                break;
-        }
-    }
 });
-
-// Performance monitoring
-if (window.performance) {
-    window.addEventListener('load', () => {
-        const perfData = window.performance.timing;
-        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-        console.log(`Page loaded in ${pageLoadTime}ms`);
-    });
-}

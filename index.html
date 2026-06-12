@@ -53,11 +53,9 @@
             <!-- Google Sign-In -->
             <div class="auth-option">
                 <h3>Sign in with Google</h3>
-                <div id="g_id_onload"
-                     data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
-                     data-callback="handleGoogleLogin">
-                </div>
-                <div class="g_id_signin" data-type="standard"></div>
+                <button class="btn btn-google" onclick="handleGoogleLogin()">
+                    <i class="fab fa-google"></i> Sign in with Google
+                </button>
             </div>
 
             <!-- GitHub Sign-In -->
@@ -66,15 +64,14 @@
                 <button class="btn btn-github" onclick="handleGithubLogin()">
                     <i class="fab fa-github"></i> Sign in with GitHub
                 </button>
-                <p class="auth-note">GitHub authentication via OAuth2</p>
             </div>
 
             <!-- API Key Input (for development) -->
             <div class="auth-option">
-                <h3>Use API Key</h3>
+                <h3>Use Gemini API Key</h3>
                 <input type="password" id="apiKeyInput" placeholder="Enter your Gemini API Key" class="api-key-input">
                 <button class="btn btn-primary" onclick="setApiKey()">Set API Key</button>
-                <p class="auth-note">Get your free API key from <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></p>
+                <p class="auth-note">Get your free API key from <a href="https://makersuite.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio</a></p>
             </div>
         </div>
     </div>
@@ -83,7 +80,7 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Your AI Pair-Programmer That Never Sleeps</h1>
-            <p>CodeMate AI is an intelligent coding assistant that writes, debugs, and refactors code in real-time across any language or framework.</p>
+            <p>CodeMate AI is an intelligent coding assistant powered by Google Gemini AI that writes, debugs, and refactors code in real-time across any language or framework.</p>
             <div class="hero-buttons">
                 <button class="btn btn-primary" onclick="scrollTo('#demo')">Try It Now</button>
                 <button class="btn btn-secondary" onclick="scrollTo('#features')">Learn More</button>
@@ -109,7 +106,7 @@
                     <span>main.ts</span>
                 </div>
                 <pre><code>function fibonacci(n: number): number {
-  if (n &lt;= 1) return n;
+  if (n <= 1) return n;
   return fibonacci(n - 1) + fibonacci(n - 2);
 }</code></pre>
             </div>
@@ -118,62 +115,62 @@
 
     <!-- Features Section -->
     <section id="features" class="features">
-        <h2>Powerful Features</h2>
+        <h2>Powered by Google Gemini AI</h2>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-bolt"></i>
                 </div>
-                <h3>Lightning Fast</h3>
-                <p>Get instant code suggestions powered by advanced AI models. Real-time completions as you type.</p>
+                <h3>Real-time AI Analysis</h3>
+                <p>Get instant, intelligent code suggestions powered by Google's advanced Gemini AI model.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-shield-alt"></i>
                 </div>
                 <h3>Secure & Private</h3>
-                <p>Your code stays private. Enterprise-grade security with zero data storage policies.</p>
+                <p>OAuth2 authentication with Google and GitHub. Your code stays private with enterprise-grade security.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-brain"></i>
                 </div>
-                <h3>Smart Context</h3>
+                <h3>Context-Aware</h3>
                 <p>AI understands your entire codebase and provides contextually relevant suggestions.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-globe"></i>
                 </div>
-                <h3>Multi-Language</h3>
-                <p>Support for JavaScript, Python, TypeScript, Go, Rust, Java, C++, and 40+ more languages.</p>
+                <h3>Multi-Language Support</h3>
+                <p>JavaScript, Python, TypeScript, Go, Rust, Java, C++, and 40+ more languages.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-puzzle-piece"></i>
                 </div>
-                <h3>Easy Integration</h3>
-                <p>Works seamlessly with VS Code, JetBrains IDEs, Sublime, and all major code editors.</p>
+                <h3>Deep Code Analysis</h3>
+                <p>Advanced analysis including bug detection, performance optimization, and code refactoring.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-graduation-cap"></i>
                 </div>
-                <h3>Learn & Improve</h3>
-                <p>Get AI-powered explanations and learn better coding practices from real examples.</p>
+                <h3>Learn While You Code</h3>
+                <p>Get AI-powered explanations and learn better coding practices with real examples.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-bug"></i>
                 </div>
-                <h3>Debug Assistant</h3>
-                <p>Identify bugs instantly and get intelligent suggestions for fixes and optimizations.</p>
+                <h3>Bug Detection</h3>
+                <p>Identify potential bugs instantly and get intelligent suggestions for fixes.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-sync"></i>
                 </div>
-                <h3>Refactor Code</h3>
+                <h3>Code Refactoring</h3>
                 <p>Transform legacy code into modern, clean, and maintainable code automatically.</p>
             </div>
         </div>
@@ -181,16 +178,20 @@
 
     <!-- Demo Section -->
     <section id="demo" class="demo">
-        <h2>Interactive AI Demo</h2>
-        <div class="auth-required" id="authRequired" style="display: none;">
-            <p>Please sign in to use the AI analyzer</p>
-            <button class="btn btn-primary" onclick="showAuthModal()"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+        <h2>Interactive AI Demo (Powered by Google Gemini)</h2>
+        <div class="auth-required" id="authRequired">
+            <p><i class="fas fa-lock"></i> Sign in to use the real AI analyzer</p>
+            <button class="btn btn-primary" onclick="showAuthModal()"><i class="fas fa-sign-in-alt"></i> Sign In Now</button>
         </div>
         <div class="demo-container" id="demoContainer" style="display: none;">
             <div class="demo-input">
                 <h3>Input Your Code</h3>
-                <textarea id="codeInput" placeholder="Paste your code here..." rows="12">function add(a, b) {
-  return a + b;
+                <textarea id="codeInput" placeholder="Paste your code here..." rows="12">function calculateSum(numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  return sum;
 }</textarea>
                 <div class="demo-controls">
                     <select id="languageSelect" class="language-select">
@@ -199,8 +200,11 @@
                         <option value="typescript">TypeScript</option>
                         <option value="java">Java</option>
                         <option value="cpp">C++</option>
+                        <option value="csharp">C#</option>
                         <option value="go">Go</option>
                         <option value="rust">Rust</option>
+                        <option value="php">PHP</option>
+                        <option value="ruby">Ruby</option>
                     </select>
                     <select id="taskSelect" class="task-select">
                         <option value="analyze">Analyze Code</option>
@@ -208,18 +212,19 @@
                         <option value="refactor">Refactor Code</option>
                         <option value="optimize">Optimize Performance</option>
                         <option value="document">Add Documentation</option>
+                        <option value="test">Generate Tests</option>
                     </select>
                 </div>
-                <button class="btn btn-primary" onclick="analyzeCodeWithAI()">
-                    <i class="fas fa-magic"></i> Analyze with Real AI
+                <button class="btn btn-primary" id="analyzeBtn" onclick="analyzeCodeWithAI()">
+                    <i class="fas fa-magic"></i> Analyze with Gemini AI
                 </button>
                 <div id="loadingSpinner" class="loading-spinner" style="display: none;">
                     <div class="spinner"></div>
-                    <p>Analyzing your code...</p>
+                    <p>Analyzing your code with AI...</p>
                 </div>
             </div>
             <div class="demo-output">
-                <h3>AI Analysis</h3>
+                <h3>AI Analysis Result</h3>
                 <div id="demoOutput" class="output-box">
                     <p class="placeholder">Your AI analysis will appear here...</p>
                 </div>
@@ -235,19 +240,20 @@
                 <h3>Starter</h3>
                 <div class="price">Free</div>
                 <ul class="features-list">
-                    <li><i class="fas fa-check"></i> 100 suggestions/day</li>
-                    <li><i class="fas fa-check"></i> Basic code completion</li>
+                    <li><i class="fas fa-check"></i> 100 AI analyses/day</li>
+                    <li><i class="fas fa-check"></i> Basic code analysis</li>
                     <li><i class="fas fa-check"></i> Community support</li>
+                    <li><i class="fas fa-check"></i> Google/GitHub login</li>
                 </ul>
-                <button class="btn btn-secondary">Get Started</button>
+                <button class="btn btn-secondary" onclick="showAuthModal()">Get Started</button>
             </div>
             <div class="pricing-card featured">
                 <div class="badge">Popular</div>
                 <h3>Pro</h3>
                 <div class="price">$9<span>/month</span></div>
                 <ul class="features-list">
-                    <li><i class="fas fa-check"></i> Unlimited suggestions</li>
-                    <li><i class="fas fa-check"></i> Advanced refactoring</li>
+                    <li><i class="fas fa-check"></i> Unlimited AI analyses</li>
+                    <li><i class="fas fa-check"></i> Advanced code features</li>
                     <li><i class="fas fa-check"></i> Priority support</li>
                     <li><i class="fas fa-check"></i> Team collaboration</li>
                 </ul>
@@ -262,7 +268,7 @@
                     <li><i class="fas fa-check"></i> Custom integration</li>
                     <li><i class="fas fa-check"></i> SLA guarantee</li>
                 </ul>
-                <button class="btn btn-secondary">Contact Sales</button>
+                <button class="btn btn-secondary" onclick="scrollTo('#contact')">Contact Sales</button>
             </div>
         </div>
     </section>
@@ -272,36 +278,36 @@
         <h2>About CodeMate AI</h2>
         <div class="about-content">
             <div class="about-text">
-                <p>CodeMate AI was built by developers, for developers. We understand the challenges of modern software development and created an AI assistant that truly understands code.</p>
-                <p>Our mission is to make developers more productive, help them write better code, and allow them to focus on what matters most—solving complex problems and building amazing applications.</p>
+                <p>CodeMate AI was built by developers, for developers. We leverage Google's cutting-edge Gemini AI model to create an intelligent assistant that truly understands code.</p>
+                <p>With OAuth2 authentication via Google and GitHub, plus real-time AI analysis, CodeMate AI helps you write better code faster, debug issues instantly, and refactor legacy systems with confidence.</p>
                 <div class="tech-stack">
-                    <h4>Built With</h4>
+                    <h4>Powered By</h4>
                     <div class="tech-items">
-                        <span>React 18</span>
+                        <span><i class="fas fa-brain"></i> Google Gemini AI</span>
+                        <span><i class="fab fa-google"></i> Google OAuth2</span>
+                        <span><i class="fab fa-github"></i> GitHub OAuth</span>
                         <span>TypeScript</span>
+                        <span>React 18</span>
                         <span>Node.js</span>
-                        <span>Express</span>
-                        <span>Google Gemini AI</span>
-                        <span>OAuth2 Auth</span>
                     </div>
                 </div>
             </div>
             <div class="about-stats">
                 <div class="stat-card">
                     <h4>50+</h4>
-                    <p>Supported Languages</p>
+                    <p>Languages Supported</p>
                 </div>
                 <div class="stat-card">
-                    <h4>10M+</h4>
-                    <p>Code Snippets Analyzed</p>
+                    <h4>Real-time</h4>
+                    <p>AI Powered</p>
                 </div>
                 <div class="stat-card">
-                    <h4>1000+</h4>
-                    <p>Active Developers</p>
+                    <h4>Secure</h4>
+                    <p>OAuth2 Auth</p>
                 </div>
                 <div class="stat-card">
-                    <h4>99.9%</h4>
-                    <p>Uptime SLA</p>
+                    <h4>Free</h4>
+                    <p>To Start</p>
                 </div>
             </div>
         </div>
@@ -330,7 +336,7 @@
     <!-- Newsletter Section -->
     <section class="newsletter">
         <h2>Stay Updated</h2>
-        <p>Get the latest updates and features delivered to your inbox</p>
+        <p>Get the latest AI features and updates delivered to your inbox</p>
         <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
             <input type="email" placeholder="Enter your email" required>
             <button type="submit" class="btn btn-primary">Subscribe</button>
@@ -342,7 +348,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h4>CodeMate AI</h4>
-                <p>Your AI pair-programmer that never sleeps.</p>
+                <p>Your AI pair-programmer powered by Google Gemini.</p>
             </div>
             <div class="footer-section">
                 <h4>Product</h4>
@@ -371,18 +377,19 @@
             <div class="footer-section">
                 <h4>Connect</h4>
                 <div class="social-links">
-                    <a href="https://github.com/stevenabdelsayed523-ux/Sxx" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
+                    <a href="https://github.com/stevenabdelsayed523-ux/Sxx" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://discord.com" target="_blank" rel="noopener"><i class="fab fa-discord"></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 CodeMate AI. All rights reserved. | Made with <i class="fas fa-heart"></i> by developers</p>
+            <p>&copy; 2026 CodeMate AI. All rights reserved. | Powered by <a href="https://ai.google.dev" target="_blank" rel="noopener">Google Gemini AI</a></p>
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai@0.3.0/dist/index.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
