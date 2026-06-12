@@ -1,0 +1,29 @@
+[project]
+name = "codemate-ai-engine"
+version = "0.1.0"
+description = "Core AI engine for CodeMate AI — code generation, debugging, and refactoring service"
+requires-python = ">=3.11"
+dependencies = [
+    "tiktoken>=0.8.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.34.0",
+    "pydantic>=2.10.0",
+    "openai>=1.58.0",
+    "anthropic>=0.47.0",
+    "python-dotenv>=1.0.0",
+    "httpx>=0.28.0",
+    "sse-starlette>=2.2.0",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+select = ["E", "F", "I", "N", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
