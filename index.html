@@ -7,6 +7,7 @@
     <title>CodeMate AI - Intelligent Code Assistant</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="https://accounts.google.com/gsi/client"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -24,6 +25,16 @@
                 <li><a href="https://github.com/stevenabdelsayed523-ux/Sxx" target="_blank" class="github-btn">
                     <i class="fab fa-github"></i> GitHub
                 </a></li>
+                <li id="authSection">
+                    <button id="loginBtn" class="btn btn-primary" onclick="showAuthModal()">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <div id="userProfile" style="display: none;" class="user-profile">
+                        <img id="userAvatar" src="" alt="User Avatar" class="avatar">
+                        <span id="userName"></span>
+                        <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+                    </div>
+                </li>
             </ul>
             <div class="hamburger">
                 <span></span>
@@ -32,6 +43,41 @@
             </div>
         </div>
     </nav>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <h2>Sign In to CodeMate AI</h2>
+            
+            <!-- Google Sign-In -->
+            <div class="auth-option">
+                <h3>Sign in with Google</h3>
+                <div id="g_id_onload"
+                     data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+                     data-callback="handleGoogleLogin">
+                </div>
+                <div class="g_id_signin" data-type="standard"></div>
+            </div>
+
+            <!-- GitHub Sign-In -->
+            <div class="auth-option">
+                <h3>Sign in with GitHub</h3>
+                <button class="btn btn-github" onclick="handleGithubLogin()">
+                    <i class="fab fa-github"></i> Sign in with GitHub
+                </button>
+                <p class="auth-note">GitHub authentication via OAuth2</p>
+            </div>
+
+            <!-- API Key Input (for development) -->
+            <div class="auth-option">
+                <h3>Use API Key</h3>
+                <input type="password" id="apiKeyInput" placeholder="Enter your Gemini API Key" class="api-key-input">
+                <button class="btn btn-primary" onclick="setApiKey()">Set API Key</button>
+                <p class="auth-note">Get your free API key from <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></p>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -135,21 +181,47 @@
 
     <!-- Demo Section -->
     <section id="demo" class="demo">
-        <h2>Interactive Demo</h2>
-        <div class="demo-container">
+        <h2>Interactive AI Demo</h2>
+        <div class="auth-required" id="authRequired" style="display: none;">
+            <p>Please sign in to use the AI analyzer</p>
+            <button class="btn btn-primary" onclick="showAuthModal()"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+        </div>
+        <div class="demo-container" id="demoContainer" style="display: none;">
             <div class="demo-input">
                 <h3>Input Your Code</h3>
                 <textarea id="codeInput" placeholder="Paste your code here..." rows="12">function add(a, b) {
   return a + b;
 }</textarea>
-                <button class="btn btn-primary" onclick="analyzeCode()">
-                    <i class="fas fa-magic"></i> Analyze with AI
+                <div class="demo-controls">
+                    <select id="languageSelect" class="language-select">
+                        <option value="javascript">JavaScript</option>
+                        <option value="python">Python</option>
+                        <option value="typescript">TypeScript</option>
+                        <option value="java">Java</option>
+                        <option value="cpp">C++</option>
+                        <option value="go">Go</option>
+                        <option value="rust">Rust</option>
+                    </select>
+                    <select id="taskSelect" class="task-select">
+                        <option value="analyze">Analyze Code</option>
+                        <option value="debug">Find Bugs</option>
+                        <option value="refactor">Refactor Code</option>
+                        <option value="optimize">Optimize Performance</option>
+                        <option value="document">Add Documentation</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="analyzeCodeWithAI()">
+                    <i class="fas fa-magic"></i> Analyze with Real AI
                 </button>
+                <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Analyzing your code...</p>
+                </div>
             </div>
             <div class="demo-output">
-                <h3>AI Suggestions</h3>
+                <h3>AI Analysis</h3>
                 <div id="demoOutput" class="output-box">
-                    <p class="placeholder">Your AI suggestions will appear here...</p>
+                    <p class="placeholder">Your AI analysis will appear here...</p>
                 </div>
             </div>
         </div>
@@ -209,7 +281,8 @@
                         <span>TypeScript</span>
                         <span>Node.js</span>
                         <span>Express</span>
-                        <span>Vite</span>
+                        <span>Google Gemini AI</span>
+                        <span>OAuth2 Auth</span>
                     </div>
                 </div>
             </div>
